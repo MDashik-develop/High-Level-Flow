@@ -55,6 +55,22 @@ export async function generateAiPitchDirect(options: AiRequestOptions): Promise<
 }
 
 /**
+ * Direct 200 OK JSON API Call for Deep AI Audit & Redesign Blueprint
+ */
+export async function runAiAuditDirect(options: AiRequestOptions): Promise<any> {
+    try {
+        const response = await axios.post('/api/ai/run-audit', options);
+        return response.data;
+    } catch (error: any) {
+        return {
+            status: error.response?.status || 500,
+            success: false,
+            message: error.response?.data?.message || error.message || 'Deep AI Audit failed.',
+        };
+    }
+}
+
+/**
  * Direct Call to Standalone Node.js Microservice (http://localhost:3001/api/ai/generate)
  */
 export async function callNodeJsAiService(options: AiRequestOptions): Promise<AiResponse> {

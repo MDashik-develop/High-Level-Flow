@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AiApiController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConversationController;
@@ -61,6 +62,6 @@ Route::patch('settings/integrations/{setting}/toggle', [IntegrationController::c
 Route::post('settings/integrations/{setting}/test', [IntegrationController::class, 'testConnection'])->name('integrations.test');
 
 // Direct HTTP 200 OK JSON API endpoints for AI (Zero 302/303 Redirects)
-Route::post('api/ai/test-connection', [\App\Http\Controllers\Api\AiApiController::class, 'testConnection'])->name('api.ai.test');
-Route::post('api/ai/generate-pitch', [\App\Http\Controllers\Api\AiApiController::class, 'generatePitch'])->name('api.ai.pitch');
-
+Route::post('api/ai/test-connection', [AiApiController::class, 'testConnection'])->name('api.ai.test');
+Route::post('api/ai/generate-pitch', [AiApiController::class, 'generatePitch'])->name('api.ai.pitch');
+Route::post('api/ai/run-audit', [AiApiController::class, 'runAudit'])->name('api.ai.audit');

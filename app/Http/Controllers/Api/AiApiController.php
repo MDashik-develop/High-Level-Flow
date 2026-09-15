@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\IntegrationSetting;
 use App\Models\WebsiteAudit;
 use App\Services\IntegrationManagerService;
+use App\Services\WebsiteCrawlerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class AiApiController extends Controller
 
         return response()->json([
             'status' => 200,
-            'success' => !empty($result['success']),
+            'success' => ! empty($result['success']),
             'message' => $result['message'] ?? 'Connection test completed.',
             'provider' => $provider,
             'is_sandbox' => $setting->is_sandbox ?? true,
@@ -67,7 +68,7 @@ class AiApiController extends Controller
         $prompt = "Write an elite, high-converting B2B cold outreach email pitch for {$company} ({$domain}).\n"
             ."Core Services: {$servicesList}\n"
             ."Bottlenecks: {$gapsList}\n"
-            .($customInstruction ? "Custom Instructions: {$customInstruction}\n" : "");
+            .($customInstruction ? "Custom Instructions: {$customInstruction}\n" : '');
 
         $context = [
             'company' => $company,
@@ -79,17 +80,52 @@ class AiApiController extends Controller
 
         $result = $service->generateAiCompletion($prompt, 'You are an elite B2B sales copywriter.', $provider, $context);
 
-        if (!empty($result['content']) && $audit) {
+        if (! empty($result['content']) && $audit) {
             $audit->update(['generated_pitch' => $result['content']]);
         }
 
         return response()->json([
             'status' => 200,
-            'success' => !empty($result['success']),
+            'success' => ! empty($result['success']),
             'content' => $result['content'] ?? '',
             'provider' => $result['provider'] ?? $provider,
             'model' => $result['model'] ?? 'AI Engine',
             'is_sandbox' => $result['is_sandbox'] ?? false,
+            'notice' => $result['notice'] ?? null,
+        ], 200);
+    }
+
+    /**
+     * Direct 200 OK JSON API Endpoint for Deep AI Audit & Redesign Blueprint
+     * (NO 302 or 303 Redirects!)
+     */
+    public function runAudit(Request $request, IntegrationManagerService $aiService, WebsiteCrawlerService $crawlerService): JsonResponse
+    {
+        $auditId = $request->input('audit_id');
+        $audit = WebsiteAudit::findOrFail($auditId);
+        $provider = $request->input('provider', 'huggingface');
+
+        $company = $audit->company_name ?: $audit->domain;
+        $servicesList = implode(', ', $audit->services ?? ['core business services']);
+
+        // Generate deep niche 2026 intelligence
+        $deepData = $crawlerService->generateDeep2026NicheAudit($audit);
+
+        $prompt = "Perform a 2026 Deep Agency Audit for {$company} ({$audit->domain}). Services: {$servicesList}. Generate JSON recommendations.";
+        $context = ['company' => $company, 'domain' => $audit->domain];
+
+        $result = $aiService->generateAiCompletion($prompt, 'You are an elite CRO expert.', $provider, $context);
+
+        $audit->update([
+            'redesign_data' => $deepData,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'success' => true,
+            'redesign_data' => $deepData,
+            'provider' => $result['provider'] ?? $provider,
+            'model' => $result['model'] ?? 'AI Engine',
             'notice' => $result['notice'] ?? null,
         ], 200);
     }

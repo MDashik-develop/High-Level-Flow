@@ -39,7 +39,7 @@ import {
     Target,
 } from 'lucide-react';
 import { WebsiteAudit, IntegrationSetting } from '../../types';
-import { generateAiPitchDirect } from '../../Services/aiService';
+import { generateAiPitchDirect, runAiAuditDirect } from '../../Services/aiService';
 
 interface Props {
     audit: WebsiteAudit;
@@ -63,6 +63,7 @@ export default function WebsiteCrawlerShow({ audit, activeAiServices }: Props) {
     const [isDeepAuditing, setIsDeepAuditing] = useState(false);
 
     const [generatedPitchText, setGeneratedPitchText] = useState<string>(audit.generated_pitch || '');
+    const [redesignState, setRedesignState] = useState<any>(audit.redesign_data);
     const [aiNoticeText, setAiNoticeText] = useState<string | null>(null);
 
     // Custom prompt toggle & input
@@ -82,16 +83,21 @@ export default function WebsiteCrawlerShow({ audit, activeAiServices }: Props) {
     const hfModel = hfService?.credentials?.model || 'meta-llama/Llama-3.1-8B-Instruct';
     const openAiModel = openAiService?.credentials?.model || 'gpt-4o';
 
-    const handleRunDeepAiAudit = (provider: string = 'huggingface') => {
+    const handleRunDeepAiAudit = async (provider: string = 'huggingface') => {
         setIsDeepAuditing(true);
-        router.post(
-            `/crawler/${audit.id}/ai-audit`,
-            { provider },
-            {
-                preserveScroll: true,
-                onFinish: () => setIsDeepAuditing(false),
-            }
-        );
+        setAiNoticeText(null);
+        const res = await runAiAuditDirect({
+            audit_id: audit.id,
+            provider,
+        });
+        setIsDeepAuditing(false);
+
+        if (res && res.redesign_data) {
+            setRedesignState(res.redesign_data);
+        }
+        if (res && res.notice) {
+            setAiNoticeText(res.notice);
+        }
     };
 
     // Compile comprehensive JSON data payload
@@ -109,8 +115,8 @@ export default function WebsiteCrawlerShow({ audit, activeAiServices }: Props) {
         contact_intelligence: audit.contact_info || { emails: [], phones: [], socials: {} },
         detected_tech_stack: audit.tech_stack || {},
         identified_conversion_gaps: audit.missing_tools || [],
-        redesign_assessment: audit.redesign_data || null,
-        tailored_cold_pitch: audit.generated_pitch,
+        redesign_assessment: redesignState || audit.redesign_data || null,
+        tailored_cold_pitch: generatedPitchText || audit.generated_pitch,
     };
 
     const handleCopyPitch = () => {
@@ -177,7 +183,7 @@ export default function WebsiteCrawlerShow({ audit, activeAiServices }: Props) {
         }
     };
 
-    const redesign = audit.redesign_data;
+    const redesign = redesignState || audit.redesign_data;
 
     return (
         <AppLayout title={`Audit: ${audit.company_name || audit.domain}`}>
