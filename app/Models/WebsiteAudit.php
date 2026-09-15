@@ -17,6 +17,8 @@ class WebsiteAudit extends Model
         'contact_info' => 'array',
         'tech_stack' => 'array',
         'missing_tools' => 'array',
+        'redesign_data' => 'array',
+        'raw_data' => 'array',
         'audit_score' => 'integer',
     ];
 

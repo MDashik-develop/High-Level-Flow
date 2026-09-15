@@ -39,8 +39,12 @@ Route::post('workflows/{workflow}/test-execute', [WorkflowController::class, 'te
 // Smart Website Crawler / Agency Audit Tool (Client Hunting Weapon)
 Route::get('crawler', [WebsiteAuditController::class, 'index'])->name('crawler.index');
 Route::post('crawler/scan', [WebsiteAuditController::class, 'crawl'])->name('crawler.scan');
+Route::post('crawler/bulk-delete', [WebsiteAuditController::class, 'bulkDestroy'])->name('crawler.bulk-destroy');
+Route::delete('crawler/{audit}', [WebsiteAuditController::class, 'destroy'])->name('crawler.destroy');
 Route::get('crawler/{audit}', [WebsiteAuditController::class, 'show'])->name('crawler.show');
 Route::post('crawler/{audit}/convert-to-lead', [WebsiteAuditController::class, 'convertToLead'])->name('crawler.convert-lead');
+Route::post('crawler/{audit}/ai-pitch', [WebsiteAuditController::class, 'generateAiPitch'])->name('crawler.ai-pitch');
+Route::post('crawler/{audit}/ai-audit', [WebsiteAuditController::class, 'runAiAudit'])->name('crawler.ai-audit');
 
 // Marketing Campaigns
 Route::resource('campaigns', CampaignController::class)->only(['index', 'store']);
@@ -53,4 +57,10 @@ Route::post('contacts/{contact}/messages', [ConversationController::class, 'send
 // Third-Party Paid API Settings & Integrations
 Route::get('settings/integrations', [IntegrationController::class, 'index'])->name('integrations.index');
 Route::patch('settings/integrations/{setting}', [IntegrationController::class, 'update'])->name('integrations.update');
+Route::patch('settings/integrations/{setting}/toggle', [IntegrationController::class, 'toggleActive'])->name('integrations.toggle');
 Route::post('settings/integrations/{setting}/test', [IntegrationController::class, 'testConnection'])->name('integrations.test');
+
+// Direct HTTP 200 OK JSON API endpoints for AI (Zero 302/303 Redirects)
+Route::post('api/ai/test-connection', [\App\Http\Controllers\Api\AiApiController::class, 'testConnection'])->name('api.ai.test');
+Route::post('api/ai/generate-pitch', [\App\Http\Controllers\Api\AiApiController::class, 'generatePitch'])->name('api.ai.pitch');
+

@@ -143,6 +143,15 @@ export interface WebsiteAudit {
     audit_score: number;
     audit_summary?: string;
     generated_pitch?: string;
+    redesign_data?: {
+        feasibility: string;
+        modernization_score: number;
+        summary: string;
+        critique_points: string[];
+        recommended_additions: string[];
+        funnel_blueprint: Array<{ step: string; action: string }>;
+    };
+    raw_data?: Record<string, any>;
     converted_contact_id?: number;
     converted_contact?: Contact;
     created_at: string;

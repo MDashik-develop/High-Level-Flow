@@ -57,11 +57,17 @@ class ConversationController extends Controller
         if ($validated['type'] === 'sms') {
             $phone = $contact->phone ?? '+15551234567';
             $res = $integrations->sendSms($phone, $validated['body']);
+            if (empty($res['success'])) {
+                return redirect()->back()->with('error', $res['note'] ?? 'Twilio SMS service is turned OFF in Settings > API Integrations.');
+            }
             $status = $res['status'] ?? 'sent';
             $providerMsgId = $res['message_id'] ?? null;
         } elseif ($validated['type'] === 'email') {
             $email = $contact->email ?? 'lead@example.com';
             $res = $integrations->sendEmail($email, $validated['subject'] ?? 'Message from your team', $validated['body']);
+            if (empty($res['success'])) {
+                return redirect()->back()->with('error', $res['note'] ?? 'Email service is turned OFF in Settings > API Integrations.');
+            }
             $status = $res['status'] ?? 'sent';
             $providerMsgId = $res['message_id'] ?? null;
         }

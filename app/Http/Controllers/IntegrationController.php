@@ -12,25 +12,36 @@ class IntegrationController extends Controller
 {
     public function index(): Response
     {
-        $providers = ['twilio', 'resend', 'stripe', 'openai', 'calendly'];
+        $providers = ['twilio', 'resend', 'stripe', 'openai', 'huggingface', 'calendly'];
 
         // Ensure defaults exist
         foreach ($providers as $provider) {
             IntegrationSetting::firstOrCreate(
                 ['provider' => $provider],
                 [
-                    'name' => ucfirst($provider),
-                    'category' => match($provider) {
+                    'name' => match ($provider) {
+                        'huggingface' => 'Hugging Face AI (Open Source LLMs)',
+                        'openai' => 'OpenAI AI Assistant',
+                        default => ucfirst($provider),
+                    },
+                    'category' => match ($provider) {
                         'twilio' => 'sms',
                         'resend' => 'marketing',
                         'stripe' => 'payment',
                         'openai' => 'ai',
+                        'huggingface' => 'ai',
                         'calendly' => 'calendar',
                         default => 'marketing',
                     },
                     'is_active' => true,
                     'is_sandbox' => true,
-                    'credentials' => [],
+                    'credentials' => match ($provider) {
+                        'huggingface' => [
+                            'api_token' => '',
+                            'model' => 'meta-llama/Meta-Llama-3-8B-Instruct',
+                        ],
+                        default => [],
+                    },
                 ]
             );
         }
@@ -68,5 +79,15 @@ class IntegrationController extends Controller
         }
 
         return redirect()->back()->with('error', $result['message'] ?? 'Connection test failed.');
+    }
+
+    public function toggleActive(Request $request, IntegrationSetting $setting)
+    {
+        $newState = ! $setting->is_active;
+        $setting->update(['is_active' => $newState]);
+
+        $statusText = $newState ? 'turned ON (Active)' : 'turned OFF (Disabled)';
+
+        return redirect()->back()->with('success', "{$setting->name} is now {$statusText}.");
     }
 }
