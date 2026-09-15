@@ -1,58 +1,183 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 HighLevel Flow — AI-Powered Agency OS & CRM Automation Platform
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 13" />
+  <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19" />
+  <img src="https://img.shields.io/badge/Inertia.js-2.0-9553E9?style=for-the-badge&logo=inertia&logoColor=white" alt="Inertia.js" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4.0-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
+  <img src="https://img.shields.io/badge/Node.js-Microservice-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js AI Service" />
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**HighLevel Flow** is an all-in-one AI-driven Agency Automation, Lead Intelligence, and CRM Platform (inspired by GoHighLevel). It empowers digital marketing agencies, consultants, and SaaS businesses to crawl prospective client websites, perform 2026 AI conversion audits, generate personalized cold outreach pitches, convert audit leads directly into CRM deals, build visual marketing funnels, and automate customer conversations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🔥 Key Modules & Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🌐 1. Website Intelligence & Deep AI 2026 Audit
+* **Automated Web Crawler**: Scrapes target domain HTML, page titles, meta descriptions, detected services, tech stack, and contact emails/phones/socials.
+* **3-Point Agency Assessment**:
+  * **১. কি কি কম আছে (Website Gaps)**: Identifies conversion bottlenecks (e.g., missing 24/7 AI Receptionist, floating CTA, SMS auto-responders).
+  * **২. কি কি আরো Add করা যাবে (Growth Additions)**: Lists high-ROI agency upsells tailored to the client's niche.
+  * **৩. Redesign Feasibility & Funnel Blueprint**: Provides a 4-step conversion-focused redesign roadmap.
+* **AI Cold Outreach Pitch Generator**: Generates high-converting, personalized cold email/SMS scripts with support for custom prompt instructions and quick preset chips.
+* **1-Click Lead Conversion**: Automatically converts crawled audit data into a CRM contact with an estimated deal value (e.g., $1,500).
+* **Export & JSON Data**: Copy or download structured JSON audit reports with one click.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 🤖 2. Multi-Provider AI Architecture
+HighLevel Flow includes a flexible AI architecture featuring **direct HTTP 200 OK JSON API endpoints** (eliminating 302/303 browser redirects):
 
-## Agentic Development
+* **🤗 Hugging Face Inference Engine**: Connects via Hugging Face Serverless Router API with support for models like `meta-llama/Llama-3.1-8B-Instruct`. Features robust header preservation across load-balancer redirects.
+* **⚡ OpenAI Integration**: Native support for `gpt-4o` and `gpt-3.5-turbo` models.
+* **🟢 Standalone Node.js Microservice**: Standalone Express.js AI microservice located in `ai-service/server.js` listening on port `3001` for direct JavaScript/React calls.
+* **🛡️ Local Simulator Fallback**: Built-in simulator mode to ensure full system functionality even when offline or without external API tokens.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
-```bash
-composer require laravel/boost --dev
+### 👥 3. CRM & Contact Management
+* Comprehensive contact records with contact details, company information, lead scores, tags, and notes.
+* Instant conversion from website audit crawler into active CRM contacts.
 
-php artisan boost:install
-```
+---
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 📈 4. Opportunity Pipelines & Kanban Board
+* Visual drag-and-drop Kanban board for managing deals across sales pipeline stages.
+* Deal tracking with revenue projection, status updates, and stage transition triggers.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 💬 5. Unified Conversations
+* Centralized inbox consolidating SMS, Email, WhatsApp, and AI Chatbot conversations into a single timeline.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### ⚡ 6. Visual Workflow & Automation Builder
+* Node-based visual automation workflow editor powered by `@xyflow/react`.
+* Create triggers, conditional branching, automated SMS/Email sequences, and AI voice concierge routing.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 🎨 7. Funnel & Page Builder
+* Drag-and-drop landing page and sales funnel builder powered by GrapesJS.
+* Build high-converting agency templates, lead capture pages, and appointment booking funnels.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### ⚙️ 8. Integration & AI Settings
+* Manage provider credentials, select default AI models, set sandbox/production modes, and run real-time API connection tests.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Backend Framework** | PHP 8.4+, Laravel 13.x |
+| **Frontend SPA** | Inertia.js 2.0 (React 19 + TypeScript) |
+| **Styling & UI** | Tailwind CSS v4, Lucide React, Clsx, Tailwind Merge |
+| **Data Visualizations** | Chart.js, React-ChartJS-2 |
+| **Workflow Builder** | `@xyflow/react` (React Flow) |
+| **Funnel Builder** | GrapesJS |
+| **AI Microservice** | Node.js, Express.js, Axios |
+| **Web Scraping** | Symfony DOM Crawler |
+| **Code Formatter & Quality** | Laravel Pint, PHPUnit, Laravel Boost |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* **PHP**: 8.3 or 8.4+
+* **Composer**: 2.x+
+* **Node.js**: 20.x+
+* **Database**: SQLite (default) or MySQL / PostgreSQL
+
+---
+
+### 💻 Local Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/MDashik-develop/High-Level-Flow.git
+   cd High-Level-Flow
+   ```
+
+2. **Install PHP Dependencies**:
+   ```bash
+   composer install
+   ```
+
+3. **Install Node.js Dependencies**:
+   ```bash
+   npm install
+   ```
+
+4. **Set Up Environment**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Run Database Migrations & Seeders**:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+6. **Build Frontend Assets**:
+   ```bash
+   npm run build
+   ```
+
+7. **Start Application**:
+   * Option A (Laravel Dev Server + Vite):
+     ```bash
+     composer run dev
+     ```
+   * Option B (Manual background processes):
+     ```bash
+     php artisan serve
+     npm run dev
+     ```
+
+8. **(Optional) Start Standalone Node.js AI Service**:
+   ```bash
+   node ai-service/server.js
+   ```
+
+Access the platform in your browser at: `http://127.0.0.1:8000`
+
+---
+
+## 📡 Key API Endpoints
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/ai/test-connection` | `POST` | Tests connection to active AI provider (Hugging Face, OpenAI, or Simulator). Returns `200 OK` JSON. |
+| `/api/ai/generate-pitch` | `POST` | Generates personalized cold outreach pitch for a given audit ID and custom prompt. Returns `200 OK` JSON. |
+| `/api/ai/run-audit` | `POST` | Executes 2026 Deep AI Audit and updates redesign assessment data live. Returns `200 OK` JSON. |
+| `http://localhost:3001/api/ai/generate` | `POST` | Standalone Node.js AI microservice endpoint for external AI completions. |
+
+---
+
+## 🎨 Code Style & Quality
+
+* **PHP Formatting**: Standardized using Laravel Pint.
+  ```bash
+  vendor/bin/pint
+  ```
+* **Testing**: Run test suites using PHPUnit.
+  ```bash
+  php artisan test
+  ```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
